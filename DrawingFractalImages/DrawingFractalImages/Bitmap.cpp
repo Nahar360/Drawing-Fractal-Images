@@ -21,6 +21,18 @@ namespace Fractals
 
 	void Bitmap::setPixel(int x, int y, uint8_t red, uint8_t green, uint8_t blue)
 	{
+		uint8_t* pPixel = m_pPixels.get();
+		// y * m_width = number of pixels/bytes (if each pixel is 1 byte) in all the rows before the one we are actually interested in
+		// + x = moving it forward the number of columns specified by x
+		// y * 3 = because we have r, g, b
+		pPixel += (y * 3) * m_width + (x * 3);
+
+		// reversed format because the bitmap is a little endian format
+		// little endian: storing least significant byte in the area of memory that has the smallest memory addressed
+		// 0xFF8844
+		pPixel[0] = blue;
+		pPixel[1] = green;
+		pPixel[2] = red;
 	}
 
 	bool Bitmap::write(std::string filename)
