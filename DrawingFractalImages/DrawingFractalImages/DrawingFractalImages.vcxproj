@@ -140,11 +140,13 @@
   <ItemGroup>
     <ClCompile Include="Bitmap.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Mandelbrot.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bitmap.hpp" />
     <ClInclude Include="BitmapFileHeader.hpp" />
     <ClInclude Include="BitmapInfoHeader.hpp" />
+    <ClInclude Include="Mandelbrot.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
