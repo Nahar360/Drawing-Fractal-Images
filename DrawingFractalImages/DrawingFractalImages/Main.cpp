@@ -5,6 +5,7 @@
 
 #include "Bitmap.hpp"
 #include "Mandelbrot.hpp"
+#include "ZoomList.hpp"
 
 using namespace Fractals;
 
@@ -17,6 +18,11 @@ int main()
 	const int SIZE = WIDTH * HEIGHT;
 
 	Bitmap bitmap(WIDTH, HEIGHT);
+
+	ZoomList zoomList(WIDTH, HEIGHT);
+	zoomList.add(Zoom(WIDTH / 2, HEIGHT / 2, 4.0 / WIDTH));
+	zoomList.add(Zoom(295, HEIGHT - 202, 0.1));
+	zoomList.add(Zoom(312, HEIGHT - 304, 0.1));
 
 	std::unique_ptr<int[]> histogram(new int[Mandelbrot::MAX_ITERATIONS]);
 	for (int i = 0; i < Mandelbrot::MAX_ITERATIONS; i++)
@@ -35,10 +41,9 @@ int main()
 	{
 		for (int x = 0; x < WIDTH; x++)
 		{
-			double xFractal = (x - (WIDTH / 2) - 175) * 2.0 / HEIGHT; // same scaling factor (HEIGHT)
-			double yFractal = (y - (HEIGHT / 2)) * 2.0 / HEIGHT;
+			std::pair<double, double> coords = zoomList.doZoom(x, y);
 
-			int iterations = Mandelbrot::getIterations(xFractal, yFractal);
+			int iterations = Mandelbrot::getIterations(coords.first, coords.second);
 			if (iterations != Mandelbrot::MAX_ITERATIONS)
 			{
 				histogram[iterations]++;
